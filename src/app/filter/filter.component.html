@@ -1,0 +1,22 @@
+ <ion-grid style="width: 100%; height: 100%;">
+  <ion-row  style="width: 100%; height: 100%;">
+    <ion-col size='12'>
+      <ion-header>
+        <ion-icon name="arrow-back">
+
+        </ion-icon>
+        <span (click)="goBack()">
+          filters
+        </span>
+      </ion-header>
+      <ion-card *ngFor='let category of requestService.categories' style="display: flex; flex-wrap: nowrap; ">
+         <div>
+          {{category.name}}
+        </div>        
+        <ion-icon *ngIf="category.active" name="checkmark" style="margin-top: auto; margin-bottom: auto;margin-left:auto; font-size: xx-large;">
+        </ion-icon> 
+     </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid> 
+ 
