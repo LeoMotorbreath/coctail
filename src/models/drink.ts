@@ -1,8 +1,5 @@
-export class Drink{
+export interface Drink{
     name: string;
     img:  string;
-    constructor(model){
-        this.name = model.strDrink;
-        this.img  = model.strDrinkThumb; 
-    }
+    
 }

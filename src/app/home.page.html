@@ -1,0 +1,48 @@
+<ion-content [fullscreen]="true"  > 
+  <div *ngIf="!renderFilters">
+  <ion-grid style="width: 100%; height: 90%; padding: 0%;" >
+       <ion-row style="padding: 0px;">
+         <ion-col size="12" style="padding: 0px;">
+           <div style="width:100%;height: 70px; display: flex; justify-content: space-between; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);">
+            <span style="display: inline-block; margin-top: auto; margin-bottom: auto; margin-left: 30px ;font-size: 21px; ">
+              Drinks
+            </span>
+              <span style="display:inline-block; margin-bottom: auto; margin-top: auto; margin-right: 21px;">
+                  <ion-icon name='funnel' style=" font-size: 27px;"  (click)= "toggleFiltersRendering() " >
+                  </ion-icon>
+                </span>
+              </div>
+           <div *ngFor="let activeCategory of activeCategories">
+             <ion-card-header style="text-align: center; color:#7E7E7E">
+               {{activeCategory.name}}
+             </ion-card-header>
+             <ion-card-content *ngFor='let drink of activeCategory.drinks' style="display: flex; ">
+                <ion-img [src]='drink.strDrinkThumb' style="width: 100px; height: 100px;">
+
+                </ion-img>
+                <span style="margin-top: auto; margin-bottom: auto; margin-left: 20px; color:#7E7E7E; font-size: 16px;">
+                  {{drink.strDrink}}
+                </span>
+             </ion-card-content>
+            </div>
+               <ion-card *ngIf='finalResult'>
+                <ion-card-content style="text-align: center; font-size: large;">
+                  that`s all =)
+                </ion-card-content>
+               </ion-card>
+         </ion-col>
+       </ion-row>
+      </ion-grid> 
+      
+      
+    </div>     
+        <ion-infinite-scroll threshold="300px" #infiniteScroll (ionInfinite)="getCategory($event)" [hidden]="finalResult || renderFilters" [disabled]="loadingDisabled || renderFilters || finalResult ">
+           <ion-infinite-scroll-content 
+           loadingSpinner="bubbles"
+           loadingText="Loading more data...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+        <app-filter *ngIf="renderFilters" (onCommingBack)='toggleFiltersRendering($event)' (onFilltersApply)="setActiveCategories($event)">
+
+        </app-filter> 
+</ion-content>

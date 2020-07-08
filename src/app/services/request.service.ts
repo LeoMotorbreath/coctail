@@ -5,17 +5,7 @@ import { Category } from 'src/models/category';
   providedIn: 'root'
 })
 export class RequestService {
-  categories: Category[] =  [
-    new Category('Ordinary Drink'),
-    new Category('Other/Unknown'),
-    new Category('Cocktail'),
-    new Category('Milk / Float / Shake'),
-    new Category('Cocoa'),
-    new Category('Shot'),
-    new Category('Coffee / Tea'),
-    new Category('Homemade Liqueur'),
-    new Category('Beer'),
-  ];
+  categories: Category[] ;
   acitveCategories: Category[];
   createDefaultCategories(): Category[] {
     return [
@@ -30,19 +20,19 @@ export class RequestService {
       new Category('Beer'),
     ]
   }
-  
+  setActiveCategories(){
+    this.acitveCategories = this.addActive();
+  }
   addActive(){
-    this.categories.forEach(category=> category.active? this.acitveCategories.push(category) : null);
+    return this.categories.filter(category => category.active).map(category=>{category.drinks = []; return category}); 
   }
   constructor(
     private http: HttpClient 
     )
     {
+      this.categories = this.createDefaultCategories();
       this.acitveCategories = [... this.categories];
     }
-  getCoctaileByName(name:string){
-    return this.http.get('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + name )
-  }
   getCoctaileByCategory(name:string){
     return this.http.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=' + name);
   }
